@@ -106,14 +106,33 @@ class DiningHallListActivity : AppCompatActivity() {
         // val spacingInPixels = resources.getDimensionPixelSize(R.dimen.spacing)
         // list_dining_hall.addItemDecoration(SpacesItemDecoration(spacingInPixels))
 
-        adapter.submitList(listOf(
-                DiningHall("Findlay East", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_findlay_east")),
-                DiningHall("Mix at Pollock", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_mix_at_pollock")),
-                DiningHall("North", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_north")),
-                DiningHall("Pollock", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_pollock")),
-                DiningHall("Redifer South", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_redifer_south")),
-                DiningHall("West", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_west"))
-        ))
+//        adapter.submitList(listOf(
+//                DiningHall("Findlay East", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_findlay_east")),
+//                DiningHall("Mix at Pollock", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_mix_at_pollock")),
+//                DiningHall("North", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_north")),
+//                DiningHall("Pollock", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_pollock")),
+//                DiningHall("Redifer South", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_redifer_south")),
+//                DiningHall("West", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_west"))
+//        ))
+
+
+        val diningHallImages = mapOf(
+                "11" to Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_findlay_east"),
+                "24" to Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_mix_at_pollock"),
+                "17" to Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_north"),
+                "14" to Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_pollock"),
+                "13" to Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_redifer_south"),
+                "16" to Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_west")
+        )
+
+
+        API.getDiningHalls { diningHalls ->
+
+            val hallsWithImages = diningHalls.map { it.copy(imageIcon = diningHallImages[it.number]) }
+
+            adapter.submitList(hallsWithImages)
+
+        }
 
     }
 

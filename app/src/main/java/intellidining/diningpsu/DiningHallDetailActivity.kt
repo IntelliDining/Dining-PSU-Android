@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.item_food_menu_section.view.*
 import java.util.*
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
+import kotlin.collections.ArrayList
 
 
 class DiningHallDetailActivity : AppCompatActivity() {
@@ -97,7 +98,7 @@ class DiningHallDetailActivity : AppCompatActivity() {
                 is MenuElement.Item -> {
                     holder as MenuItemViewHolder
 
-                    holder.name.text = item.item.mealName
+                    holder.name.text = item.item.recipePrintAsName
 
                 }
             }
@@ -161,6 +162,28 @@ class DiningHallDetailActivity : AppCompatActivity() {
 
         list_item_menu.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
+        val date = "10/05/2018"
+
+        API.getMenu(date, diningHall.number) { menu ->
+
+            val collection = ArrayList<MenuElement>()
+
+            for ((meal, map) in menu) {
+
+                for ((location, items) in map) {
+
+                    collection.add(MenuElement.Header("$meal / $location"))
+
+                    for (item in items) {
+                        collection.add(MenuElement.Item(item))
+                    }
+                }
+            }
+
+            adapter.submitList(collection)
+
+        }
+
 //        adapter.submitList(listOf(
 //                MenuElement.Header("Section 1"),
 //                MenuElement.Item(MenuItem("Rice Krispies")),
@@ -176,11 +199,10 @@ class DiningHallDetailActivity : AppCompatActivity() {
 
         /* starts before 1 month from now */
         val startDate = Calendar.getInstance()
-        startDate.add(Calendar.MONTH, -1)
 
         /* ends after 1 month from now */
         val endDate = Calendar.getInstance()
-        endDate.add(Calendar.MONTH, 1)
+        endDate.add(Calendar.MONTH, 5)
 
         val horizontalCalendar = HorizontalCalendar.Builder(this, R.id.calendarView)
                 .range(startDate, endDate)
