@@ -20,7 +20,7 @@ class MenuItemDetailActivity : AppCompatActivity() {
             return
         }
 
-        setContentView(R.layout.content_menu_item_detail)
+        setContentView(R.layout.activity_menu_item_detail)
         setSupportActionBar(toolbar)
 
         supportActionBar?.title = menuItem.recipePrintAsName

@@ -19,6 +19,7 @@ import java.util.*
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
 import kotlinx.android.synthetic.main.item_food_menu.view.*
+import java.text.SimpleDateFormat
 import kotlin.collections.ArrayList
 
 
@@ -160,6 +161,54 @@ class DiningHallDetailActivity : AppCompatActivity() {
 
         val date = "10/05/2018"
 
+
+//        adapter.submitList(listOf(
+//                MenuElement.Header("Section 1"),
+//                MenuElement.Item(MenuItem("Rice Krispies")),
+//                MenuElement.Item(MenuItem("Mac & Cheese")),
+//                MenuElement.Item(MenuItem("Salad")),
+//                MenuElement.Header("Section 2"),
+//                MenuElement.Item(MenuItem("Broccoli & Beef")),
+//                MenuElement.Item(MenuItem("Rice")),
+//                MenuElement.Item(MenuItem("Cookie")),
+//                MenuElement.Header("Section 3"),
+//                MenuElement.Item(MenuItem("Turkey"))
+//        ))
+
+        loadDay(diningHall, date)
+
+        /* starts before 1 month from now */
+        val startDate = Calendar.getInstance()
+
+        /* ends after 1 month from now */
+        val endDate = Calendar.getInstance()
+        endDate.add(Calendar.MONTH, 5)
+
+        val horizontalCalendar = HorizontalCalendar.Builder(this, R.id.calendarView)
+                .range(startDate, endDate)
+                .datesNumberOnScreen(5)
+                .build()
+
+        horizontalCalendar.calendarListener = object : HorizontalCalendarListener() {
+            override fun onDateSelected(date: Calendar, position: Int) {
+
+                val formatter = SimpleDateFormat("MM/dd/yyyy")
+
+                val dt = formatter.format(date.time)
+
+                loadDay(diningHall, dt)
+
+            }
+
+        }
+
+        fab.setOnClickListener { _ ->
+            toggleCalendar()
+        }
+    }
+
+    fun loadDay(diningHall: DiningHall, date: String) {
+
         API.getMenu(date, diningHall.number) { menu ->
 
             val collection = ArrayList<MenuElement>()
@@ -180,39 +229,6 @@ class DiningHallDetailActivity : AppCompatActivity() {
 
         }
 
-//        adapter.submitList(listOf(
-//                MenuElement.Header("Section 1"),
-//                MenuElement.Item(MenuItem("Rice Krispies")),
-//                MenuElement.Item(MenuItem("Mac & Cheese")),
-//                MenuElement.Item(MenuItem("Salad")),
-//                MenuElement.Header("Section 2"),
-//                MenuElement.Item(MenuItem("Broccoli & Beef")),
-//                MenuElement.Item(MenuItem("Rice")),
-//                MenuElement.Item(MenuItem("Cookie")),
-//                MenuElement.Header("Section 3"),
-//                MenuElement.Item(MenuItem("Turkey"))
-//        ))
-
-        /* starts before 1 month from now */
-        val startDate = Calendar.getInstance()
-
-        /* ends after 1 month from now */
-        val endDate = Calendar.getInstance()
-        endDate.add(Calendar.MONTH, 5)
-
-        val horizontalCalendar = HorizontalCalendar.Builder(this, R.id.calendarView)
-                .range(startDate, endDate)
-                .datesNumberOnScreen(5)
-                .build()
-
-        horizontalCalendar.calendarListener = object : HorizontalCalendarListener() {
-            override fun onDateSelected(date: Calendar, position: Int) {
-            }
-        }
-
-        fab.setOnClickListener { _ ->
-            toggleCalendar()
-        }
     }
 
     private fun toggleCalendar() {
