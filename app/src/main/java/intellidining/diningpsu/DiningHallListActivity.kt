@@ -1,28 +1,25 @@
 package intellidining.diningpsu
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_dining_hall_list.*
 import kotlinx.android.synthetic.main.content_dining_hall_list.*
 import kotlinx.android.synthetic.main.item_dining_hall.view.*
-import android.R.attr.spacing
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
-import android.widget.ImageView
-import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityOptionsCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 
 
 class DiningHallListActivity : AppCompatActivity() {
@@ -38,7 +35,6 @@ class DiningHallListActivity : AppCompatActivity() {
             }
 
         }
-
     }
 
     class DiningHallViewHolder(root: View) : RecyclerView.ViewHolder(root) {
@@ -109,7 +105,6 @@ class DiningHallListActivity : AppCompatActivity() {
 
         // val spacingInPixels = resources.getDimensionPixelSize(R.dimen.spacing)
         // list_dining_hall.addItemDecoration(SpacesItemDecoration(spacingInPixels))
-
 
         adapter.submitList(listOf(
                 DiningHall("Findlay East", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_findlay_east")),

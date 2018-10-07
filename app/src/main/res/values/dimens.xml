@@ -3,5 +3,8 @@
 
     <dimen name="spacing">8dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="expanded_app_bar_height">270dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="horizontal_calendar_height">90dp</dimen>
 </resources>
