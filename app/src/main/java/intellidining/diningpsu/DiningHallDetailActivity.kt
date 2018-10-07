@@ -1,22 +1,24 @@
 package intellidining.diningpsu
 
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_dining_hall_detail.*
 import kotlinx.android.synthetic.main.content_dining_hall_detail.*
-import kotlinx.android.synthetic.main.item_dining_hall.view.*
 import kotlinx.android.synthetic.main.item_food_menu_section.view.*
 import java.util.*
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
+import kotlinx.android.synthetic.main.item_food_menu.view.*
 import kotlin.collections.ArrayList
 
 
@@ -26,11 +28,11 @@ class DiningHallDetailActivity : AppCompatActivity() {
 
         val MENU_ELEMENT_DIFFER = object : DiffUtil.ItemCallback<MenuElement>() {
             override fun areItemsTheSame(oldItem: MenuElement, newItem: MenuElement): Boolean {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                return oldItem == newItem
             }
 
             override fun areContentsTheSame(oldItem: MenuElement, newItem: MenuElement): Boolean {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                return oldItem == newItem
             }
 
         }
@@ -38,10 +40,8 @@ class DiningHallDetailActivity : AppCompatActivity() {
 
     sealed class MenuElement {
         companion object {
-            @JvmField
-            val TYPE_HEADER = 1
-            @JvmField
-            val TYPE_ITEM = 2
+            const val TYPE_HEADER = 1
+            const val TYPE_ITEM = 2
         }
 
         data class Header(val name: String) : MenuElement()
@@ -56,7 +56,9 @@ class DiningHallDetailActivity : AppCompatActivity() {
 
     class MenuItemViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
+        val container: ConstraintLayout = root.item_container
         val name: TextView = root.text_name
+        val caption: TextView = root.text_caption
 
     }
 
@@ -98,40 +100,34 @@ class DiningHallDetailActivity : AppCompatActivity() {
                 is MenuElement.Item -> {
                     holder as MenuItemViewHolder
 
+                    holder.container.setOnClickListener {
+
+                        val intent = Intent(holder.container.context, MenuItemDetailActivity::class.java)
+
+                        intent.putExtra("menu_item", item.item)
+
+                        holder.container.context.startActivity(intent)
+
+                    }
+
                     holder.name.text = item.item.recipePrintAsName
+
+                    fun coerce(x: String) = if (x.isNotEmpty()) x else "?"
+
+                    holder.caption.text = "kcal: ${coerce(item.item.calories)}, fat: ${coerce(item.item.totalFat)}"
 
                 }
             }
 
-//            if (item.imageIcon != null) {
-//                Glide.with(holder.itemView)
-//                        .load(item.imageIcon)
-//                        .apply(RequestOptions.centerCropTransform())
-//                        .into(holder.image)
-//            }
-
-//            holder.card.setOnClickListener {
-//                val context = holder.itemView.context
-//
-//                val intent = Intent(context, DiningHallDetailActivity::class.java)
-//
-//                intent.putExtra("dining_hall", item)
-//
-//                val options = ActivityOptionsCompat
-//                        .makeSceneTransitionAnimation(context as Activity, holder.image, "hall_image")
-//
-//                context.startActivity(intent, options.toBundle())
-//                context.startActivity(intent)
-//
-//            }
-
-
         }
 
-//        override fun onViewRecycled(holder: DiningHallListActivity.DiningHallViewHolder) {
-//            Glide.with(holder.itemView).clear(holder.image)
-//            holder.card.setOnClickListener(null)
-//        }
+        override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
+            when (holder) {
+                is MenuItemViewHolder -> {
+                    holder.container.setOnClickListener(null)
+                }
+            }
+        }
     }
 
     private val adapter = MenuItemAdapter()

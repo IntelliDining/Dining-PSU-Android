@@ -27,11 +27,11 @@ class DiningHallListActivity : AppCompatActivity() {
 
         val DINING_HALL_DIFFER = object : DiffUtil.ItemCallback<DiningHall>() {
             override fun areItemsTheSame(oldItem: DiningHall, newItem: DiningHall): Boolean {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                return oldItem.number == newItem.number
             }
 
             override fun areContentsTheSame(oldItem: DiningHall, newItem: DiningHall): Boolean {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                return oldItem == newItem
             }
 
         }
@@ -105,16 +105,6 @@ class DiningHallListActivity : AppCompatActivity() {
 
         // val spacingInPixels = resources.getDimensionPixelSize(R.dimen.spacing)
         // list_dining_hall.addItemDecoration(SpacesItemDecoration(spacingInPixels))
-
-//        adapter.submitList(listOf(
-//                DiningHall("Findlay East", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_findlay_east")),
-//                DiningHall("Mix at Pollock", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_mix_at_pollock")),
-//                DiningHall("North", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_north")),
-//                DiningHall("Pollock", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_pollock")),
-//                DiningHall("Redifer South", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_redifer_south")),
-//                DiningHall("West", Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_west"))
-//        ))
-
 
         val diningHallImages = mapOf(
                 "11" to Uri.parse("android.resource://intellidining.diningpsu/drawable/hall_findlay_east"),
