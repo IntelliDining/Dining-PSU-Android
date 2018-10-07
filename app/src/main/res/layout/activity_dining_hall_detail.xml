@@ -17,7 +17,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/app_bar_height"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -27,9 +27,9 @@
                 android:id="@+id/backdrop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 android:transitionName="hall_image"
-                android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax" />
 
             <androidx.appcompat.widget.Toolbar
@@ -40,9 +40,19 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        <devs.mulham.horizontalcalendar.HorizontalCalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:sizeBottomText="14sp"
+            app:sizeMiddleText="20sp"
+            app:textColorSelected="#FFFF" />
+
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_dining_hall_detail_2" />
+    <include layout="@layout/content_dining_hall_detail" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -51,6 +61,7 @@
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:layout_behavior="@null"
+        app:srcCompat="@drawable/ic_date_range_white_24dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
