@@ -97,7 +97,7 @@ class DiningHallDetailActivity : AppCompatActivity() {
                 is MenuElement.Item -> {
                     holder as MenuItemViewHolder
 
-                    holder.name.text = item.item.name
+                    holder.name.text = item.item.mealName
 
                 }
             }
@@ -161,18 +161,18 @@ class DiningHallDetailActivity : AppCompatActivity() {
 
         list_item_menu.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
-        adapter.submitList(listOf(
-                MenuElement.Header("Section 1"),
-                MenuElement.Item(MenuItem("Rice Krispies")),
-                MenuElement.Item(MenuItem("Mac & Cheese")),
-                MenuElement.Item(MenuItem("Salad")),
-                MenuElement.Header("Section 2"),
-                MenuElement.Item(MenuItem("Broccoli & Beef")),
-                MenuElement.Item(MenuItem("Rice")),
-                MenuElement.Item(MenuItem("Cookie")),
-                MenuElement.Header("Section 3"),
-                MenuElement.Item(MenuItem("Turkey"))
-        ))
+//        adapter.submitList(listOf(
+//                MenuElement.Header("Section 1"),
+//                MenuElement.Item(MenuItem("Rice Krispies")),
+//                MenuElement.Item(MenuItem("Mac & Cheese")),
+//                MenuElement.Item(MenuItem("Salad")),
+//                MenuElement.Header("Section 2"),
+//                MenuElement.Item(MenuItem("Broccoli & Beef")),
+//                MenuElement.Item(MenuItem("Rice")),
+//                MenuElement.Item(MenuItem("Cookie")),
+//                MenuElement.Header("Section 3"),
+//                MenuElement.Item(MenuItem("Turkey"))
+//        ))
 
         /* starts before 1 month from now */
         val startDate = Calendar.getInstance()
